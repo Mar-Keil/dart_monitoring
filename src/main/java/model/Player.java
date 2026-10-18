@@ -8,7 +8,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "spieler")
-public class Spieler {
+public class Player {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,9 +21,7 @@ public class Spieler {
         this.firstname = firstname;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
-    }
+    public void setLastname(String lastname) {this.lastname = lastname;}
 
     public Integer getId() {
         return id;

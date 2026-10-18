@@ -1,6 +1,6 @@
 package persistence;
 
-import model.Spieler;
+import model.Player;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -13,7 +13,7 @@ public class HibernateSetup {
 
         try {
             return new MetadataSources(registry)
-                    .addAnnotatedClass(Spieler.class)
+                    .addAnnotatedClass(Player.class)
                     .buildMetadata()
                     .buildSessionFactory();
         } catch (RuntimeException e) {
