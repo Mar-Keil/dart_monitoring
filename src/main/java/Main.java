@@ -1,12 +1,25 @@
-import game.Control;
-import io.*;
+import game.GameControl;
+import game.PlayerSelection;
+
 import persistence.HibernateSetup;
+import persistence.PlayerRepository;
+
+import java.util.Scanner;
 
 public class Main {
     public void main(String[] args){
+
+        Scanner scanner = new Scanner(System.in);
+
         try (var sessionFactory = HibernateSetup.createSessionFactory()) {
             IO.println("Hibernate wurde erfolgreich gestartet.");
-            Control controller = new Control(new Printer(), new Reader(), new Scan());
+
+            PlayerRepository playerRepository = new PlayerRepository(sessionFactory);
+
+            PlayerSelection playerSelection = new PlayerSelection(playerRepository, scanner);
+            GameControl control = new GameControl();
+
+            control.startGame(playerSelection.getPlayers());
         }
     }
 }
