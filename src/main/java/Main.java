@@ -12,7 +12,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         try (var sessionFactory = HibernateSetup.createSessionFactory()) {
-            IO.println("Hibernate wurde erfolgreich gestartet.");
+            IO.println("\nHibernate wurde erfolgreich gestartet.");
 
             PlayerRepository playerRepository = new PlayerRepository(sessionFactory);
 

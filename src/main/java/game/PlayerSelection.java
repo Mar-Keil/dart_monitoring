@@ -21,7 +21,7 @@ public class PlayerSelection {
 
     public List<Player> getPlayers() {
 
-        IO.println("Known players:");
+        IO.println("\nKnown players:");
 
         List<Player> allPlayers = playerRepository.findAll();
 
@@ -46,7 +46,7 @@ public class PlayerSelection {
                     allPlayers.remove(player);
 
                     IO.println("Do you want to add another player?");
-                    if (readBoolean()){
+                    if (readConfirmation()){
                         return selectPlayer(allPlayers, selectedPlayers);
                     }
                     else{
@@ -62,7 +62,7 @@ public class PlayerSelection {
             if (scanner.nextLine().strip().equalsIgnoreCase("new")){
                  selectedPlayers.add(addPlayer());
                  IO.println("Do you want to add another player?");
-                 if (readBoolean()) return selectPlayer(allPlayers, selectedPlayers);
+                 if (readConfirmation()) return selectPlayer(allPlayers, selectedPlayers);
                  else return selectedPlayers;
             }
             IO.println("Invalid input. Please try again.");
@@ -85,23 +85,23 @@ public class PlayerSelection {
             } while (newPlayer.getLastname().isBlank());
 
             IO.println("Do you want to add " +  newPlayer.getFirstname() + " " + newPlayer.getLastname() + " as a new player?");
-        } while(!readBoolean());
+        } while(!readConfirmation());
         playerRepository.save(newPlayer);
         return newPlayer;
     }
 
 
-    private boolean readBoolean() {
+    private boolean readConfirmation() {
         try{
-            IO.println("Please enter true or false:");
+            IO.println("Press Enter for yes or type no:");
             return switch (scanner.nextLine().strip().toLowerCase(Locale.ROOT)) {
-                case "true" -> true;
-                case "false" -> false;
+                case "" -> true;
+                case "no" -> false;
                 default -> throw new InputMismatchException();
             };
         } catch (InputMismatchException e) {
             IO.println("Invalid input. Please try again.");
-            return readBoolean();
+            return readConfirmation();
         }
     }
 }

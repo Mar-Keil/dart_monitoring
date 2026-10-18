@@ -7,15 +7,10 @@ import java.util.List;
 
 public class GameControl {
 
-    private final Scan scan =  new Scan();
-
     public void startGame(List<Player> players){
-        boolean active = true;
-        do {
-
-            CurrentGame game = new CurrentGame(scan);
-
-        }while(scan.continueGame());
-
+       IO.println("For the game selected are:");
+       for  (Player player : players){
+           IO.println(player.getFirstname() + " " + player.getLastname());
+       }
     }
 }
