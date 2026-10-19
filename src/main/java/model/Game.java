@@ -11,6 +11,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "games")
@@ -32,8 +36,14 @@ public class Game {
     @Column(name = "checkout_rule", nullable = false)
     private CheckoutRule checkoutRule;
 
-    @Column(name = "final_score", nullable = false)
-    private int finalScore;
+    @Column(name = "final_score")
+    private Integer finalScore;
+
+    @Transient
+    private int remainingScore;
+
+    @Transient
+    private List<Turn> turns = new ArrayList<>();
 
     public Game() {
     }
@@ -42,7 +52,20 @@ public class Game {
         this.player = player;
         this.startingScore = startingScore;
         this.checkoutRule = checkoutRule;
+        this.remainingScore = startingScore;
     }
 
-    public void setFinalScore(int finalScore) {this.finalScore = finalScore;}
+    public Integer getId() {
+        return id;
+    }
+
+    public void setFinalScore(Integer finalScore) {this.finalScore = finalScore;}
+
+    public void setRemainingScore(int remainingScore) {
+        this.remainingScore = remainingScore;
+    }
+
+    public void addTurn(Turn turn) {
+        turns.add(turn);
+    }
 }
