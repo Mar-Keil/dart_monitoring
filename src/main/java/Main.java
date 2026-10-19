@@ -1,8 +1,7 @@
 import game.GameControl;
 import game.PlayerSelection;
 
-import persistence.HibernateSetup;
-import persistence.PlayerRepository;
+import persistence.*;
 
 import java.util.Scanner;
 
@@ -15,9 +14,10 @@ public class Main {
             IO.println("\nHibernate wurde erfolgreich gestartet.");
 
             PlayerRepository playerRepository = new PlayerRepository(sessionFactory);
+            GameRepository gameRepository = new GameRepository(sessionFactory);
 
             PlayerSelection playerSelection = new PlayerSelection(playerRepository, scanner);
-            GameControl control = new GameControl();
+            GameControl control = new GameControl(gameRepository);
 
             control.startGame(playerSelection.getPlayers());
         }

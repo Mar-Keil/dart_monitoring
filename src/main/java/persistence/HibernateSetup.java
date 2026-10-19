@@ -1,5 +1,6 @@
 package persistence;
 
+import model.Game;
 import model.Player;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -14,6 +15,7 @@ public class HibernateSetup {
         try {
             return new MetadataSources(registry)
                     .addAnnotatedClass(Player.class)
+                    .addAnnotatedClass(Game.class)
                     .buildMetadata()
                     .buildSessionFactory();
         } catch (RuntimeException e) {
