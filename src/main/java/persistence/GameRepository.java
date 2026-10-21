@@ -13,7 +13,8 @@ public class GameRepository {
 
     public void save(Game game) {
         sessionFactory.inTransaction(session -> {
-            session.persist(game);
+            if (game.getId() == null) session.persist(game);
+            else session.merge(game);
         });
     }
 }

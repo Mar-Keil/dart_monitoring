@@ -15,9 +15,10 @@ public class Main {
 
             PlayerRepository playerRepository = new PlayerRepository(sessionFactory);
             GameRepository gameRepository = new GameRepository(sessionFactory);
+            TurnRepository turnRepository = new TurnRepository(sessionFactory);
 
             PlayerSelection playerSelection = new PlayerSelection(playerRepository, scanner);
-            GameControl control = new GameControl(gameRepository);
+            GameControl control = new GameControl(gameRepository, turnRepository, scanner);
 
             control.startGame(playerSelection.getPlayers());
         }

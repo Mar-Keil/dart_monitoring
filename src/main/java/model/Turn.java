@@ -48,16 +48,10 @@ public class Turn {
         this.turnNumber = turnNumber;
     }
 
-    public void setThrow1(String throw1) {
-        this.throw1 = throw1;
-    }
-
-    public void setThrow2(String throw2) {
-        this.throw2 = throw2;
-    }
-
-    public void setThrow3(String throw3) {
-        this.throw3 = throw3;
+    public void setThrows(String[] scores) {
+        this.throw1 = scores[0];
+        this.throw2 = scores[1];
+        this.throw3 = scores[2];
     }
 
     public void setFinisher(boolean finisher) {
