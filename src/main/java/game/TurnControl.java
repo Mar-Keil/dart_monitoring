@@ -48,7 +48,9 @@ public class TurnControl {
 
             boolean validCheckout = !doubleOut || score.startsWith("d");
 
-            if (remainingScore < 0 || (remainingScore == 0 && !validCheckout)){
+            if (remainingScore < 0
+                    || (doubleOut && remainingScore == 1)
+                    || (remainingScore == 0 && !validCheckout)){
                 bust = true;
                 break;
             }
