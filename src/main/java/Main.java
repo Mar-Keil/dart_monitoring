@@ -20,7 +20,7 @@ public class Main {
             PlayerSelection playerSelection = new PlayerSelection(playerRepository, scanner);
             GameControl control = new GameControl(gameRepository, turnRepository, scanner);
 
-            control.startGame(playerSelection.getPlayers());
+            control.gameLoop(playerSelection.getPlayers());
         }
     }
 }
