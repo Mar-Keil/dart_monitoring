@@ -1,23 +1,24 @@
-package game;
+package dart_monitoring.game;
 
-import console.ConsoleInput;
-import console.ConsoleOutput;
-import enums.CheckoutRule;
-import model.*;
-import persistence.GameRepository;
-import persistence.TurnRepository;
+import dart_monitoring.console.ConsoleInput;
+import dart_monitoring.console.ConsoleOutput;
+import dart_monitoring.enums.CheckoutRule;
+import dart_monitoring.model.*;
+import dart_monitoring.persistence.GameRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+@Component
 public class GameControl {
 
-    GameRepository gameRepository;
-    TurnRepository turnRepository;
+    private final GameRepository gameRepository;
+    private final TurnControl turnControl;
     private final ConsoleInput input;
 
-    public GameControl(GameRepository gameRepository, TurnRepository turnRepository, ConsoleInput input) {
+    public GameControl(GameRepository gameRepository, TurnControl turnControl, ConsoleInput input) {
         this.gameRepository = gameRepository;
-        this.turnRepository = turnRepository;
+        this.turnControl = turnControl;
         this.input = input;
 
     }
@@ -40,7 +41,6 @@ public class GameControl {
 
        List<Game> currentGames = initializeGames(players);
 
-       TurnControl turnControl = new TurnControl(turnRepository, input);
        int turnNumber = 1;
 
        do{

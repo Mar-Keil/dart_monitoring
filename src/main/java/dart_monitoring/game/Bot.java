@@ -1,8 +1,8 @@
-package game;
+package dart_monitoring.game;
 
-import console.ConsoleInput;
-import console.ConsoleOutput;
-import enums.BotDifficulty;
+import dart_monitoring.console.ConsoleInput;
+import dart_monitoring.console.ConsoleOutput;
+import dart_monitoring.enums.BotDifficulty;
 
 import java.util.Random;
 

@@ -1,12 +1,14 @@
-package game;
+package dart_monitoring.game;
 
-import console.ConsoleInput;
-import console.ConsoleOutput;
-import enums.CheckoutRule;
-import model.Game;
-import model.Turn;
-import persistence.TurnRepository;
+import dart_monitoring.console.ConsoleInput;
+import dart_monitoring.console.ConsoleOutput;
+import dart_monitoring.enums.CheckoutRule;
+import dart_monitoring.model.Game;
+import dart_monitoring.model.Turn;
+import dart_monitoring.persistence.TurnRepository;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TurnControl {
 
     private final TurnRepository turnRepository;

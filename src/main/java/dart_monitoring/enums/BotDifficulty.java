@@ -1,4 +1,4 @@
-package enums;
+package dart_monitoring.enums;
 
 public enum BotDifficulty {
     EASY(20, 50, 0.15),

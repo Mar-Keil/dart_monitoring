@@ -1,8 +1,10 @@
-package persistence;
+package dart_monitoring.persistence;
 
-import model.Turn;
+import dart_monitoring.model.Turn;
 import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class TurnRepository {
 
     private final SessionFactory sessionFactory;

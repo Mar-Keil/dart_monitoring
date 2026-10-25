@@ -1,4 +1,4 @@
-package console;
+package dart_monitoring.console;
 
 public final class ConsoleOutput {
 

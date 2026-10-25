@@ -1,6 +1,6 @@
-package model;
+package dart_monitoring.model;
 
-import enums.CheckoutRule;
+import dart_monitoring.enums.CheckoutRule;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -11,6 +11,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+
+import java.time.Instant;
 
 @Entity
 @Table(name = "games")
@@ -35,6 +37,9 @@ public class Game {
     @Column(name = "remaining_score")
     private int remainingScore;
 
+    @Column(name = "updated_at")
+    private Instant updatedAt;
+
     public Game() {
     }
 
@@ -56,6 +61,10 @@ public class Game {
     public void setRemainingScore(int remainingScore) {this.remainingScore = remainingScore;}
 
     public CheckoutRule getCheckoutRule() {return checkoutRule;}
+
+    public Instant getUpdatedAt() {return updatedAt;}
+
+    public void setUpdatedAt(Instant updatedAt) {this.updatedAt = updatedAt;}
 
     public boolean gameFinished(){
         return remainingScore == 0;

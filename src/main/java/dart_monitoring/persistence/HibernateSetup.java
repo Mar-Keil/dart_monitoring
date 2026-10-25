@@ -1,8 +1,8 @@
-package persistence;
+package dart_monitoring.persistence;
 
-import model.Game;
-import model.Player;
-import model.Turn;
+import dart_monitoring.model.Game;
+import dart_monitoring.model.Player;
+import dart_monitoring.model.Turn;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;

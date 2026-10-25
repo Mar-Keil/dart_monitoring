@@ -1,10 +1,12 @@
-package persistence;
+package dart_monitoring.persistence;
 
-import model.Player;
+import dart_monitoring.model.Player;
 import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class PlayerRepository {
 
     private final SessionFactory sessionFactory;

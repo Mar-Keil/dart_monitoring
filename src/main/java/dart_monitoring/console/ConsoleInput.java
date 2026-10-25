@@ -1,10 +1,12 @@
-package console;
+package dart_monitoring.console;
 
-import enums.BotDifficulty;
+import dart_monitoring.enums.BotDifficulty;
+import org.springframework.stereotype.Component;
 
 import java.util.Locale;
 import java.util.Scanner;
 
+@Component
 public class ConsoleInput {
 
     private final Scanner scanner;

@@ -1,4 +1,4 @@
-package model;
+package dart_monitoring.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

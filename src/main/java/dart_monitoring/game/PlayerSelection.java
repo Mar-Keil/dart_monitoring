@@ -1,13 +1,15 @@
-package game;
+package dart_monitoring.game;
 
-import console.ConsoleInput;
-import console.ConsoleOutput;
-import model.Player;
-import persistence.PlayerRepository;
+import dart_monitoring.console.ConsoleInput;
+import dart_monitoring.console.ConsoleOutput;
+import dart_monitoring.model.Player;
+import dart_monitoring.persistence.PlayerRepository;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class PlayerSelection {
 
     private final ConsoleInput input;

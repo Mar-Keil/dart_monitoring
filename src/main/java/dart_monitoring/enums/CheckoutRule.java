@@ -1,4 +1,4 @@
-package enums;
+package dart_monitoring.enums;
 
 public enum CheckoutRule {
     STRAIGHT_OUT,
