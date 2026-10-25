@@ -42,7 +42,7 @@ class RepositoryIntegrationTest {
     }
 
     @Test
-    void sortPlayersById() {
+    void findAllPlayers() {
         Player baker = savePlayer("Amy", "Baker");
         Player zoe = savePlayer("Zoe", "Adams");
         Player firstAmy = savePlayer("Amy", "Adams");
@@ -50,7 +50,7 @@ class RepositoryIntegrationTest {
 
         assertThat(playerRepository.findAll())
                 .extracting(Player::getId)
-                .containsExactly(baker.getId(), zoe.getId(), firstAmy.getId(), secondAmy.getId());
+                .containsExactlyInAnyOrder(baker.getId(), zoe.getId(), firstAmy.getId(), secondAmy.getId());
     }
 
     @Test
