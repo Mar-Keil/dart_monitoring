@@ -86,7 +86,6 @@ public class PlayerSelection {
             } while (newPlayer.getLastname().isBlank());
 
         } while(!input.readConfirmation("Do you want to add " + newPlayer.getFirstname() + " " + newPlayer.getLastname() + " as a new player?"));
-        playerRepository.save(newPlayer);
-        return newPlayer;
+        return playerRepository.save(newPlayer);
     }
 }

@@ -63,15 +63,15 @@ public class GameControl {
     private List<Game> initializeGames(List<Player> players){
         List<Game> currentGames = new ArrayList<>();
         for  (Player player : players){
-            currentGames.add(new Game(player, 501, CheckoutRule.DOUBLE_OUT));
-            gameRepository.save(currentGames.getLast());
+            Game game = new Game(player, 501, CheckoutRule.DOUBLE_OUT);
+            currentGames.add(gameRepository.saveWithUpdatedAt(game));
         }
         return currentGames;
     }
 
     private void saveGames(List<Game> currentGames){
         for  (Game game : currentGames){
-            gameRepository.save(game);
+            gameRepository.saveWithUpdatedAt(game);
         }
     }
 
