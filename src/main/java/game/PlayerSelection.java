@@ -1,72 +1,74 @@
 package game;
 
+import console.ConsoleInput;
+import console.ConsoleOutput;
 import model.Player;
 import persistence.PlayerRepository;
 
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Locale;
-import java.util.Scanner;
 
 public class PlayerSelection {
 
-    private final Scanner scanner;
+    private final ConsoleInput input;
     private final PlayerRepository playerRepository;
 
-    public PlayerSelection(PlayerRepository playerRepository, Scanner scanner) {
-        this.scanner = scanner;
+    public PlayerSelection(PlayerRepository playerRepository, ConsoleInput input) {
+        this.input = input;
         this.playerRepository = playerRepository;
     }
 
     public List<Player> getPlayers() {
 
-        IO.println("\nKnown players:");
+        ConsoleOutput.section("Known players:");
 
         List<Player> allPlayers = playerRepository.findAll();
 
+        int nameWidth = 0;
         for (Player player : allPlayers) {
-            IO.println(player.getFirstname() + " " + player.getLastname() + ": " + player.getId());
+            nameWidth = Math.max(nameWidth, (player.getFirstname() + " " + player.getLastname()).length());
+        }
+        for (Player player : allPlayers) {
+            System.out.printf("  %-" + nameWidth + "s : %d%n",
+                    player.getFirstname() + " " + player.getLastname(), player.getId());
         }
         return selectPlayer(allPlayers, new ArrayList<>());
-    };
+    }
 
 
     private List<Player> selectPlayer(List<Player> allPlayers, List<Player> selectedPlayers) {
 
-        IO.println("\nEnter player id or enter new to add a new player:");
+        while (true) {
+            String choice = input.readWord("Enter player id or enter new to add a new player:");
+            if (choice.equalsIgnoreCase("new")) {
+                selectedPlayers.add(addPlayer());
+            } else {
+                int id;
+                try {
+                    id = Integer.parseInt(choice);
+                } catch (NumberFormatException e) {
+                    ConsoleOutput.error("Invalid input. Please try again.");
+                    continue;
+                }
 
-        try{
-            int id = scanner.nextInt();
-            scanner.nextLine();
-
-            for(Player player : allPlayers){
-                if(id == player.getId()){
-                    selectedPlayers.add(player);
-                    allPlayers.remove(player);
-
-                    IO.println("Do you want to add another player?");
-                    if (readConfirmation()){
-                        return selectPlayer(allPlayers, selectedPlayers);
-                    }
-                    else{
-                        return selectedPlayers;
+                Player selectedPlayer = null;
+                for (Player player : allPlayers) {
+                    if (id == player.getId()) {
+                        selectedPlayer = player;
+                        break;
                     }
                 }
+                if (selectedPlayer == null) {
+                    ConsoleOutput.error("Player " + id + " is not a valid player ID. Try again.");
+                    continue;
+                }
+                selectedPlayers.add(selectedPlayer);
+                allPlayers.remove(selectedPlayer);
             }
 
-            IO.println("Player " + id + " is not a valid player ID. Try again.");
-            return selectPlayer(allPlayers, selectedPlayers);
-
-        } catch (InputMismatchException e) {
-            if (scanner.nextLine().strip().equalsIgnoreCase("new")){
-                 selectedPlayers.add(addPlayer());
-                 IO.println("Do you want to add another player?");
-                 if (readConfirmation()) return selectPlayer(allPlayers, selectedPlayers);
-                 else return selectedPlayers;
+            if (!input.readConfirmation("Do you want to add another player?")) {
+                return selectedPlayers;
             }
-            IO.println("Invalid input. Please try again.");
-            return selectPlayer(allPlayers, selectedPlayers);
         }
     }
 
@@ -74,34 +76,15 @@ public class PlayerSelection {
     private Player addPlayer() {
         Player newPlayer = new Player();
         do{
-            IO.println("Pleas enter the first name:");
-            newPlayer.setFirstname(scanner.next());
-            scanner.nextLine(); // Needed to have the next line as new input
+            newPlayer.setFirstname(input.readWord("Please enter the first name:"));
 
             do {
-                IO.println("Pleas enter the last name:");
-                newPlayer.setLastname(scanner.nextLine().strip());
-                if (newPlayer.getLastname().isEmpty()) IO.println("Last name cannot be empty.");
+                newPlayer.setLastname(input.readLine("Please enter the last name:"));
+                if (newPlayer.getLastname().isEmpty()) ConsoleOutput.error("Last name cannot be empty.");
             } while (newPlayer.getLastname().isBlank());
 
-            IO.println("Do you want to add " +  newPlayer.getFirstname() + " " + newPlayer.getLastname() + " as a new player?");
-        } while(!readConfirmation());
+        } while(!input.readConfirmation("Do you want to add " + newPlayer.getFirstname() + " " + newPlayer.getLastname() + " as a new player?"));
         playerRepository.save(newPlayer);
         return newPlayer;
-    }
-
-
-    private boolean readConfirmation() {
-        try{
-            IO.println("Press Enter for yes or type no:");
-            return switch (scanner.nextLine().strip().toLowerCase(Locale.ROOT)) {
-                case "" -> true;
-                case "no" -> false;
-                default -> throw new InputMismatchException();
-            };
-        } catch (InputMismatchException e) {
-            IO.println("Invalid input. Please try again.");
-            return readConfirmation();
-        }
     }
 }

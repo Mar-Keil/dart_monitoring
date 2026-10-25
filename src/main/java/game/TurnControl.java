@@ -1,40 +1,28 @@
 package game;
 
-
+import console.ConsoleInput;
+import console.ConsoleOutput;
 import enums.CheckoutRule;
 import model.Game;
 import model.Turn;
 import persistence.TurnRepository;
 
-import java.util.Scanner;
-
 public class TurnControl {
 
     private final TurnRepository turnRepository;
-    private final Scanner scanner;
+    private final ConsoleInput input;
 
-    public TurnControl(TurnRepository turnRepository, Scanner scanner) {
+    public TurnControl(TurnRepository turnRepository, ConsoleInput input) {
         this.turnRepository = turnRepository;
-        this.scanner = scanner;
+        this.input = input;
     }
 
     public boolean recordThrow(Game game, int turnNumber){
 
         Turn turn = new Turn(game, turnNumber);
 
-        IO.println(game.getPlayer().getFirstname() + " " + game.getPlayer().getLastname() + ": " + game.getRemainingScore());
-        IO.println("Please enter score. Required format: t20, d10, 25");
-
-        String[] validatedScores = new String[3];
-
-        for (int i = 0; i < 3; i++){
-            String score = scanner.next().replaceFirst(",$", "").toLowerCase(java.util.Locale.ROOT);
-            if (!isValidScore(score)){
-                IO.println("Score " + (i + 1) + " is invalid. Please try again.");
-                return recordThrow(game, turnNumber);
-            }
-            validatedScores[i] = score;
-        }
+        ConsoleOutput.section(game.getPlayer().getFirstname() + " " + game.getPlayer().getLastname() + ": " + game.getRemainingScore());
+        String[] validatedScores = input.readPoints("Please enter score. Required format: t20, d10, 25");
 
         String[] calculatedScores = new String[3];
         int remainingScore = game.getRemainingScore();
@@ -67,10 +55,6 @@ public class TurnControl {
         turnRepository.save(turn);
 
         return game.getRemainingScore() == 0;
-    }
-
-    private boolean isValidScore(String score) {
-        return score.matches("([dt]([1-9]|1[0-9]|20)|[0-9]|1[0-9]|20|25|d25)");
     }
 
     private int parseScore(String score){
