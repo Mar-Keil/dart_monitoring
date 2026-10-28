@@ -41,7 +41,7 @@ public class PlayerSelection {
     private List<Player> selectPlayer(List<Player> allPlayers, List<Player> selectedPlayers) {
 
         while (true) {
-            String choice = input.readWord("Enter player id or enter new to add a new player:");
+            String choice = input.readWord("Enter player id or enter 'new' to add a new player:");
             if (choice.equalsIgnoreCase("new")) {
                 selectedPlayers.add(addPlayer());
             } else {

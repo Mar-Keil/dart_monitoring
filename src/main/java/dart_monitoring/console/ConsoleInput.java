@@ -83,7 +83,7 @@ public class ConsoleInput {
 
     public boolean readConfirmation(String question) {
         while (true) {
-            String answer = readLine(question + "\nPress Enter for yes or type no:");
+            String answer = readLine(question + "\nPress Enter for yes or type 'no':");
             if (answer.isEmpty()) {
                 return true;
             }
