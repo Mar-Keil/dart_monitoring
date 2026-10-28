@@ -21,9 +21,10 @@ java -jar target/dart_monitoring-1.0-SNAPSHOT.jar
 The entry point is `dart_monitoring.Main`. Spring discovers components in that
 package and its subpackages and supplies their constructor dependencies.
 `ApplicationConfiguration` registers the scanner as a bean. Spring Boot configures
-the database connection and JPA infrastructure. `ConsoleRunner` starts the console
-game after Spring has initialized the components. When the game loop ends, the
-application context closes the scanner and database resources.
+the database connection and JPA infrastructure. The `main` method starts the console
+game after Spring has initialized the components. A try-with-resources block closes
+the application context, scanner, and database resources when the game loop ends
+or an exception occurs.
 
 Database settings are in `src/main/resources/application.properties`. The H2
 database is stored under `data/` relative to the working directory.
